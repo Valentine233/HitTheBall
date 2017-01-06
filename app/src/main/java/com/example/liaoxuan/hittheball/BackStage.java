@@ -213,8 +213,9 @@ public class BackStage {
             {
                 if (map[i][j]>=p && map[i][j]<=p+3)
                 {
-                    y = i;
-                    x = j;
+                    x = i;
+                    y = j;
+                    System.out.println("x="+x+" y="+y);
                 }
             }
         }
@@ -247,69 +248,87 @@ public class BackStage {
         // axis=1 if x; axis=2 if y; s=1 if increases; s=-1 if decreases
         if (axis == 1) //axis x
         {
-            switch (map[x+s][y]){
-                case G:
-                    map[x][y] = G;
-                    map[x+s][y] = p;
-                    break;
-                case L:
-                    //player jumps into the lake
-                    return -2;
-                case B:
-                    if(x+2*s<n && x+s>0) {
-                        switch (map[x+2*s][y]) {
-                            case H:
-                                map[x][y] = G;
-                                map[x+s][y] = p;
-                                map[x+2*s][y] = BH;
-                                return 1;
-                            case G:
-                                map[x][y] = G;
-                                map[x+s][y] = p;
-                                map[x+2*s][y] = B;
-                                if (x+3*s<n && x+2*s>0 && map[x+3*s][y] == W)
-                                    return -1;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-        else if (axis == 2) //axis y
-        {
+            System.out.println("access x, s="+s);
             switch (map[x][y+s]){
                 case G:
+                    System.out.print("case G\n");
                     map[x][y] = G;
                     map[x][y+s] = p;
                     break;
                 case L:
+                    System.out.print("case L\n");
                     //player jumps into the lake
+                    map[x][y] = p;
                     return -2;
                 case B:
-                    if(y+2*s<m && y+s>0) {
+                    System.out.print("case B\n");
+                    if(y+2*s<n && y+s>0) {
                         switch (map[x][y+2*s]) {
                             case H:
+                                System.out.print("case H\n");
                                 map[x][y] = G;
                                 map[x][y+s] = p;
                                 map[x][y+2*s] = BH;
                                 return 1;
                             case G:
+                                System.out.print("case G\n");
                                 map[x][y] = G;
                                 map[x][y+s] = p;
                                 map[x][y+2*s] = B;
-                                if (y+3*s<m && y+2*s>0 && map[x][y+3*s] == W)
+                                if (y+3*s<n && y+2*s>0 && map[x][y+3*s] == W)
                                     return -1;
                                 break;
                             default:
+                                map[x][y] = p;
                                 break;
                         }
                     }
                     break;
                 default:
+                    map[x][y] = p;
+                    break;
+            }
+        }
+        else if (axis == 2) //axis y
+        {
+            System.out.println("access y, s="+s);
+            switch (map[x+s][y]){
+                case G:
+                    System.out.print("case G\n");
+                    map[x][y] = G;
+                    map[x+s][y] = p;
+                    break;
+                case L:
+                    System.out.print("case L\n");
+                    //player jumps into the lake
+                    map[x][y] = p;
+                    return -2;
+                case B:
+                    System.out.print("case B\n");
+                    if(x+2*s<m && x+s>0) {
+                        switch (map[x+2*s][y]) {
+                            case H:
+                                System.out.print("case H\n");
+                                map[x][y] = G;
+                                map[x+s][y] = p;
+                                map[x+2*s][y] = BH;
+                                return 1;
+                            case G:
+                                System.out.print("case G\n");
+                                map[x][y] = G;
+                                map[x+s][y] = p;
+                                map[x+2*s][y] = B;
+                                if (x+3*s<m && x+2*s>0 && map[x+3*s][y] == W)
+                                    return -1;
+                                break;
+                            default:
+                                map[x][y] = p;
+                                break;
+                        }
+                    }
+                    break;
+                default:
+                    map[x][y] = p;
                     break;
             }
         }
